@@ -70,12 +70,10 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += ro.surface_flinger.enable_frame_rate_overr
 
 # sysconfig XML from stock
 PRODUCT_COPY_FILES += \
-	$(LOCAL_PATH)/product-sysconfig-stock.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/sysconfig/product-sysconfig-stock.xml
-
+	$(LOCAL_PATH)/product-sysconfig-stock.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/sysconfig/product-sysconfig-stock.xml # We keep because we modify it
 # Init files
 PRODUCT_COPY_FILES += \
-	device/google/raviole/conf/init.raviole.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.raviole.rc \
-	device/google/raviole/conf/init.raven.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.raven.rc
+	device/google/raviole/conf/init.raven.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.raven.rc # We keep because we modify it
 
 # Recovery files
 PRODUCT_COPY_FILES += \
@@ -89,16 +87,6 @@ PRODUCT_COPY_FILES += \
 	device/google/raviole/init.insmod.raven.cfg:$(TARGET_COPY_OUT_VENDOR_DLKM)/etc/init.insmod.raven.cfg
 endif
 
-# Thermal Config
-PRODUCT_COPY_FILES += \
-	device/google/raviole/thermal_info_config_raven.json:$(TARGET_COPY_OUT_VENDOR)/etc/thermal_info_config.json \
-	device/google/raviole/thermal_info_config_charge_raven.json:$(TARGET_COPY_OUT_VENDOR)/etc/thermal_info_config_charge.json
-
-# Power HAL config
-PRODUCT_COPY_FILES += \
-	device/google/raviole/powerhint-raven.json:$(TARGET_COPY_OUT_VENDOR)/etc/powerhint.json \
-	device/google/raviole/powerhint-raven-mainline.json:$(TARGET_COPY_OUT_VENDOR)/etc/powerhint-mainline.json
-
 PRODUCT_PACKAGES += \
       UwbOverlayR4
 
@@ -109,17 +97,6 @@ include device/google/gs101-sepolicy/raven-sepolicy.mk
 PRODUCT_PRODUCT_PROPERTIES += \
     persist.bluetooth.a2dp_aac.vbr_supported=true \
     persist.bluetooth.firmware.selection=BCM.hcd
-
-# Bluetooth Tx power caps for raven
-PRODUCT_COPY_FILES += \
-    device/google/raviole/bluetooth_power_limits_raven.csv:$(TARGET_COPY_OUT_VENDOR)/etc/bluetooth_power_limits.csv \
-    device/google/raviole/bluetooth_power_limits_raven_us.csv:$(TARGET_COPY_OUT_VENDOR)/etc/bluetooth_power_limits_US.csv \
-    device/google/raviole/bluetooth_power_limits_raven_eu.csv:$(TARGET_COPY_OUT_VENDOR)/etc/bluetooth_power_limits_EU.csv \
-    device/google/raviole/bluetooth_power_limits_raven_jp.csv:$(TARGET_COPY_OUT_VENDOR)/etc/bluetooth_power_limits_JP.csv
-
-# Bluetooth HAL
-PRODUCT_COPY_FILES += \
-	device/google/raviole/bluetooth/bt_vendor_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/bluetooth/bt_vendor_overlay.conf
 
 # Bluetooth Hal Extension test tools
 PRODUCT_PACKAGES_DEBUG += \
@@ -135,32 +112,8 @@ PRODUCT_PRODUCT_PROPERTIES += \
     persist.bluetooth.le_audio_test=false
 endif
 
-# MIPI Coex Configs
-PRODUCT_COPY_FILES += \
-	device/google/raviole/radio/raven_camera_rear_tele_mipi_coex_table.csv:$(TARGET_COPY_OUT_VENDOR)/etc/modem/camera_rear_tele_mipi_coex_table.csv
-
-# Camera
-PRODUCT_COPY_FILES += \
-	device/google/raviole/media_profiles_raven.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles_V1_0.xml
-
-# Display Config
-PRODUCT_COPY_FILES += \
-	device/google/raviole/raven/display_golden_cal0.pb:$(TARGET_COPY_OUT_VENDOR)/etc/display_golden_cal0.pb \
-	device/google/raviole/raven/display_colordata_dev_cal0.pb:$(TARGET_COPY_OUT_VENDOR)/etc/display_colordata_dev_cal0.pb
-
 #config of display brightness dimming
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += vendor.display.0.brightness.dimming.usage=1
-
-# NFC
-PRODUCT_COPY_FILES += \
-	frameworks/native/data/etc/android.hardware.nfc.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.nfc.xml \
-	frameworks/native/data/etc/android.hardware.nfc.hce.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.nfc.hce.xml \
-	frameworks/native/data/etc/android.hardware.nfc.hcef.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.nfc.hcef.xml \
-	frameworks/native/data/etc/com.nxp.mifare.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/com.nxp.mifare.xml \
-	frameworks/native/data/etc/android.hardware.nfc.uicc.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.nfc.uicc.xml \
-	frameworks/native/data/etc/android.hardware.nfc.ese.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.nfc.ese.xml \
-	device/google/raviole/nfc/libnfc-hal-st.conf:$(TARGET_COPY_OUT_VENDOR)/etc/libnfc-hal-st.conf \
-	device/google/raviole/nfc/libnfc-nci-raven.conf:$(TARGET_COPY_OUT_PRODUCT)/etc/libnfc-nci.conf
 
 PRODUCT_PACKAGES += \
 	$(RELEASE_PACKAGE_NFC_STACK) \
@@ -178,12 +131,6 @@ include device/google/gs-common/modem/modem_svc_sit/shared_modem_platform.mk
 PRODUCT_PACKAGES += \
 	android.hardware.secure_element@1.2-service-gto \
 	android.hardware.secure_element@1.2-service-gto-ese2
-
-PRODUCT_COPY_FILES += \
-	frameworks/native/data/etc/android.hardware.se.omapi.ese.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.se.omapi.ese.xml \
-	frameworks/native/data/etc/android.hardware.se.omapi.uicc.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.se.omapi.uicc.xml \
-	device/google/raviole/nfc/libse-gto-hal.conf:$(TARGET_COPY_OUT_VENDOR)/etc/libse-gto-hal.conf \
-	device/google/raviole/nfc/libse-gto-hal2.conf:$(TARGET_COPY_OUT_VENDOR)/etc/libse-gto-hal2.conf
 
 DEVICE_MANIFEST_FILE += \
 	device/google/raviole/nfc/manifest_se.xml
@@ -323,10 +270,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PACKAGES += \
 	libspatialaudio
 
-# Device features
-PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/handheld_core_hardware.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/handheld_core_hardware.xml
-
 # Display RRS default Config
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += persist.vendor.display.primary.boot_config=1440x3120@120
 
@@ -338,18 +281,18 @@ PRODUCT_PRODUCT_PROPERTIES += \
 ifneq (,$(filter userdebug eng, $(TARGET_BUILD_VARIANT)))
     ifneq (,$(filter 6.1, $(TARGET_LINUX_KERNEL_VERSION)))
         PRODUCT_COPY_FILES += \
-            device/google/raviole/location/gps.6.1.xml.raven:$(TARGET_COPY_OUT_VENDOR)/etc/gnss/gps.xml
+            device/google/raviole/location/gps.6.1.xml.raven:$(TARGET_COPY_OUT_VENDOR)/etc/gnss/gps.xml # keep as we modify it
     else
         PRODUCT_COPY_FILES += \
-            device/google/raviole/location/gps.xml.raven:$(TARGET_COPY_OUT_VENDOR)/etc/gnss/gps.xml
+            device/google/raviole/location/gps.xml.raven:$(TARGET_COPY_OUT_VENDOR)/etc/gnss/gps.xml # keep as we modify it
     endif
 else
     ifneq (,$(filter 6.1, $(TARGET_LINUX_KERNEL_VERSION)))
         PRODUCT_COPY_FILES += \
-            device/google/raviole/location/gps_user.6.1.xml.raven:$(TARGET_COPY_OUT_VENDOR)/etc/gnss/gps.xml
+            device/google/raviole/location/gps_user.6.1.xml.raven:$(TARGET_COPY_OUT_VENDOR)/etc/gnss/gps.xml # keep as we modify it
     else
         PRODUCT_COPY_FILES += \
-            device/google/raviole/location/gps_user.xml.raven:$(TARGET_COPY_OUT_VENDOR)/etc/gnss/gps.xml
+            device/google/raviole/location/gps_user.xml.raven:$(TARGET_COPY_OUT_VENDOR)/etc/gnss/gps.xml # keep as we modify it
     endif
 endif
 
